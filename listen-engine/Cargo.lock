@@ -1263,16 +1263,15 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "anyhow",
- "base64 0.22.1",
  "bb8-redis",
  "chrono",
  "ctor",
  "dotenv",
  "futures-util",
- "jsonwebtoken",
  "metrics",
  "metrics-exporter-prometheus",
  "once_cell",
+ "privy",
  "redis 0.23.3",
  "reqwest",
  "serde",
@@ -1638,6 +1637,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77957b295656769bb8ad2b6a6b09d897d94f05c41b069aede1fcdaa675eaea04"
 dependencies = [
  "zerocopy",
+]
+
+[[package]]
+name = "privy"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "jsonwebtoken",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.11",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
