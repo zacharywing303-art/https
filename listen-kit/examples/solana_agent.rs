@@ -10,7 +10,7 @@ use {
 #[cfg(feature = "solana")]
 #[tokio::main]
 async fn main() -> Result<()> {
-    use listen_kit::solana::agent::Features;
+    use listen_kit::{reasoning_loop::Model, solana::agent::Features};
 
     let signer = LocalSolanaSigner::new(env("SOLANA_PRIVATE_KEY"));
 
@@ -18,7 +18,8 @@ async fn main() -> Result<()> {
         let trader_agent = Arc::new(
             create_solana_agent(None, Features { autonomous: false }).await?,
         );
-        let trader_agent = ReasoningLoop::new(trader_agent).with_stdout(true);
+        let trader_agent = ReasoningLoop::new(Model::Anthropic(trader_agent))
+            .with_stdout(true);
 
         trader_agent
             .stream(
