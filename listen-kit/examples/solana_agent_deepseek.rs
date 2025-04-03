@@ -6,11 +6,9 @@ async fn main() -> anyhow::Result<()> {
         solana::agent::{create_solana_agent_deepseek, Features},
     };
     use {
-        listen_kit::common::{content, role},
         listen_kit::reasoning_loop::ReasoningLoop,
         listen_kit::signer::solana::LocalSolanaSigner,
-        listen_kit::signer::SignerContext,
-        listen_kit::solana::util::env,
+        listen_kit::signer::SignerContext, listen_kit::solana::util::env,
         std::sync::Arc,
     };
 
@@ -32,7 +30,7 @@ async fn main() -> anyhow::Result<()> {
         let trader_agent =
             ReasoningLoop::new(Model::DeepSeek(trader_agent)).with_stdout(true);
 
-        let messages = trader_agent
+        let _ = trader_agent
             .stream(
                 "
                 we are testing the resoning loop, first grab my solana pubkey then my solana balance,
@@ -43,14 +41,6 @@ async fn main() -> anyhow::Result<()> {
                 None,
             )
             .await?;
-
-        tracing::info!(
-            "messages: {:#?}",
-            messages
-                .iter()
-                .map(|m| format!("{}: {}", role(m), content(m)))
-                .collect::<Vec<_>>()
-        );
 
         Ok(())
     })

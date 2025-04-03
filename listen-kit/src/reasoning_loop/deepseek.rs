@@ -15,7 +15,7 @@ use crate::common::DeepSeekAgent;
 use super::{ReasoningLoop, StreamResponse};
 
 impl ReasoningLoop {
-    pub async fn stream_openai(
+    pub async fn stream_deepseek(
         &self,
         agent: &Arc<DeepSeekAgent>,
         prompt: String,
@@ -144,7 +144,7 @@ impl ReasoningLoop {
                         next_input = Message::User {
                             content: OneOrMany::one(
                                 UserContent::tool_result(
-                                    name.clone(),
+                                    tool_id.clone(),
                                     OneOrMany::one(ToolResultContent::text(
                                         result_str.clone(),
                                     )),
