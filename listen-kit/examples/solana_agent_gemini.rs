@@ -1,19 +1,16 @@
 #[cfg(feature = "solana")]
-use {
-    anyhow::Result,
-    listen_kit::common::{content, role},
-    listen_kit::reasoning_loop::ReasoningLoop,
-    listen_kit::signer::solana::LocalSolanaSigner,
-    listen_kit::signer::SignerContext,
-    listen_kit::solana::agent::create_solana_agent_gemini,
-    listen_kit::solana::util::env,
-    std::sync::Arc,
-};
-
-#[cfg(feature = "solana")]
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> anyhow::Result<()> {
     use listen_kit::{reasoning_loop::Model, solana::agent::Features};
+    use {
+        listen_kit::common::{content, role},
+        listen_kit::reasoning_loop::ReasoningLoop,
+        listen_kit::signer::solana::LocalSolanaSigner,
+        listen_kit::signer::SignerContext,
+        listen_kit::solana::agent::create_solana_agent_gemini,
+        listen_kit::solana::util::env,
+        std::sync::Arc,
+    };
 
     let signer = LocalSolanaSigner::new(env("SOLANA_PRIVATE_KEY"));
 

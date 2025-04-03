@@ -1,11 +1,9 @@
 use anyhow::Result;
 use futures::StreamExt;
-use rig::agent::Agent;
 use rig::completion::AssistantContent;
 use rig::completion::Message;
 use rig::message::ToolResult;
 use rig::message::{ToolResultContent, UserContent};
-use rig::providers::gemini::completion::CompletionModel as GeminiModel;
 use rig::streaming::StreamingChoice;
 use rig::streaming::StreamingCompletion;
 use rig::OneOrMany;
@@ -14,10 +12,12 @@ use std::io::Write;
 use std::sync::Arc;
 use tokio::sync::mpsc::Sender;
 
+use crate::common::GeminiAgent;
+
 use super::{ReasoningLoop, StreamResponse};
 
 impl ReasoningLoop {
-    fn geminify_chat_history(messages: Vec<Message>) -> Vec<Message> {
+    pub fn geminify_chat_history(messages: Vec<Message>) -> Vec<Message> {
         messages
             .into_iter()
             .map(|msg| {
@@ -80,7 +80,7 @@ impl ReasoningLoop {
 
     pub async fn stream_gemini(
         &self,
-        agent: &Arc<Agent<GeminiModel>>,
+        agent: &Arc<GeminiAgent>,
         prompt: String,
         messages: Vec<Message>,
         tx: Option<Sender<StreamResponse>>,
