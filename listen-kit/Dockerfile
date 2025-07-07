@@ -7,9 +7,9 @@ RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder
 COPY --from=planner /app/recipe.json recipe.json
-RUN cargo chef cook --features http --features solana --release --recipe-path recipe.json
+RUN cargo chef cook --features full --release --recipe-path recipe.json
 COPY . .
-RUN cargo build --features http --features solana --release --bin kit
+RUN cargo build --features full --release --bin kit
 
 # main listen-kit port
 EXPOSE 6969
